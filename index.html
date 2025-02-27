@@ -6,6 +6,31 @@
     <title>Audio Files</title>
 </head>
 <body>
-    <iframe src="https://script.google.com/macros/s/AKfycbz7RFa1VSBUe3m_teHHSbbEQ-LzcH6e44ltduw-jDGU2Ap7AfTuhPCRJ73KfSenzplYdA/exec" width="100%" height="400px"></iframe>
+    <h1>Audio Files</h1>
+    <div id="audioList">Loading...</div>
+
+    <script>
+        const scriptURL = "https://script.google.com/macros/s/AKfycbwCPpWbquM6BBHnjneqzCHZxw8j0MFtAhk1-hP1vbg9HCIIEfw4ijqGM0h4nd-vFgJI_Q/exec"; // Replace with your Google Apps Script URL
+
+        async function loadAudioFiles() {
+            try {
+                const response = await fetch(scriptURL);
+                const files = await response.json();
+                let output = "";
+
+                files.forEach(file => {
+                    output += `<p>${file.name}</p>`;
+                    output += `<audio controls><source src="${file.url}" type="audio/mpeg"></audio>`;
+                });
+
+                document.getElementById("audioList").innerHTML = output;
+            } catch (error) {
+                document.getElementById("audioList").innerHTML = "Failed to load files.";
+                console.error("Error fetching audio files:", error);
+            }
+        }
+
+        loadAudioFiles();
+    </script>
 </body>
 </html>
